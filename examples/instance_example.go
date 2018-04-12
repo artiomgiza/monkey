@@ -21,7 +21,7 @@ func main() {
 // This will do same as done in main:
 func PatchInstanceMethodFlexibleExample1() {
 	var d *net.Dialer
-	monkey.PatchInstanceMethod(reflect.TypeOf(d), "Dial", func() (net.Conn, error) {
+	monkey.PatchInstanceMethodFlexible(reflect.TypeOf(d), "Dial", func() (net.Conn, error) {
 		return nil, fmt.Errorf("no dialing allowed")
 	})
 	_, err := http.Get("http://google.com")
@@ -31,7 +31,7 @@ func PatchInstanceMethodFlexibleExample1() {
 // Eliminate/use input variables example:
 func PatchInstanceMethodFlexibleExample2() {
 	var d *net.Dialer
-	monkey.PatchInstanceMethod(reflect.TypeOf(d), "Dial", func(_, _ interface{}, address string) (net.Conn, error) {
+	monkey.PatchInstanceMethodFlexible(reflect.TypeOf(d), "Dial", func(_, _ interface{}, address string) (net.Conn, error) {
 		return nil, fmt.Errorf("no dialing allowed for address: %s", address)
 	})
 	_, err := http.Get("http://google.com")
